@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import { useEffect, useState } from "react"
+
 import './App.css';
+import Nav from './components/Nav'
+import Form from "./components/Form"
+import Contacts from "./components/Contacts"
 
 function App() {
+  const API = 'https://jsonplaceholder.typicode.com/users?_limit=5'
+
+  const [page, setPage] = useState('list')
+  const [users, setUsers] = useState([])
+
+  
+  useEffect(() => {
+    const fetchAPI = async (api) => {
+      const res = await fetch(api)
+      const data = await res.json()
+      setUsers(data)
+    }
+    fetchAPI(API)
+  }, [])
+
+  const setForm = () => {
+    setPage('form')
+  }
+
+  const setContact = () => {
+    setPage('list')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Nav setContact={setContact} setForm={setForm} />
+      <main>
+        {page === 'list' && <Contacts users={users} setUsers={setUsers} />}
+        {page === 'form' && <Form users={users} setUsers={setUsers} setContact={setContact} />}
+      </main>
+    </>
+  )
 }
 
-export default App;
+export default App
