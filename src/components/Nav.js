@@ -1,19 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from "react-router-dom"
+import '../App.css'
 
 const Nav = () => {
   return (
     <nav>
-      <ul className='nav'>
-        <li>
-          <Link to="/">Контакти</Link>
-        </li>
-        <li>
-          <Link to="/form">Форма</Link>
-        </li>
-      </ul>
+        <ul className="nav_ul">
+            <li className="nav_li"> <NavLink to='/'>Контакти</NavLink></li>
+            <li className="nav_li"><NavLink to='/add'>Додати новий контакт</NavLink></li>
+        </ul>
     </nav>
-  );
+  )
 }
 
 export default Nav
